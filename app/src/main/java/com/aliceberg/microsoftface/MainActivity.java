@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Frame frame = new Frame.Builder().setBitmap(mybitmap).build();
                 SparseArray<Face> faces = detector.detect(frame);
+                Bitmap newBitmap = null;
 
                 for (int i = 0; i < faces.size(); i++) {
 
@@ -77,13 +78,16 @@ public class MainActivity extends AppCompatActivity {
 
 
                     tempCanvas.drawRoundRect(new RectF(x1, y1, x2, y2), 2, 2, myRectPaint);
-
+                    //CROPPING THE FACE
+                    newBitmap = Bitmap.createBitmap(mybitmap, Math.round(x1), Math.round(y1), Math.round(thisFace.getWidth()),Math.round(thisFace.getHeight()));
 
                 }
+
 
                 Log.e("SMTH", "onClick: " + faces.get(0).getIsSmilingProbability());
 
                 imageView.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+                imageView.setImageBitmap(newBitmap);
 
 
             }
